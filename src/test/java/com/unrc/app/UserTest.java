@@ -91,6 +91,9 @@ public class UserTest{
         Post p = Post.findFirst("user_id = ?", user.getString("id"));
         assertThat(p.getString("price"),is("120000"));
         assertThat(p.getString("description"),is("Vendo camion"));
+	assertThat(p.getString("rate"),is("0"));
+	assertThat(p.getString("total_rating"),is("0"));
+	assertThat(p.getString("sum_rate"),is("0"));
     }
     @Test
     public void addQuestionTest(){

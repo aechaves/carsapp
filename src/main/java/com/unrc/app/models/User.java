@@ -59,10 +59,11 @@ public class User extends Model {
     this.saveIt();
   }
 
-  public void addPost (String price, String descr, Vehicle vehicle){
-    Post p = Post.create("price",price,"description",descr);
+  public void addPost (String price, String descr,Vehicle vehicle){
+    Post p = Post.create("price",price,"description",descr,"total_ratin","0","sum_rate","0");
     p.saveIt();
     vehicle.add(p);
+    
     this.add(p);
     this.saveIt();
   }
