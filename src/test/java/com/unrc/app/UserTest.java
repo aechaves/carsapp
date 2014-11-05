@@ -79,6 +79,9 @@ public class UserTest{
         assertThat(a.getString("km"),is("10000"));
         Car c = Car.findFirst("vehicle_id = ?", a.getString("id"));
         assertThat(c.getString("type"),is("sedan"));
+        assertThat(c.getString("rate"),is("0"));
+        assertThat(c.getString("total_rating"),is("0"));
+        assertThat(c.getString("sum_rate"),is("0"));
     }
     @Test
     public void addPostTest(){
