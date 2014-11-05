@@ -40,9 +40,15 @@ import com.unrc.app.models.Question;
 import com.unrc.app.models.Answer;
 import com.unrc.app.models.Address;
 
+import com.unrc.app.controllers.VehicleController;
 
-public class App {
+public class App {	
+	
+	
     public static void main( String[] args ) {
+    
+    VehicleController vehicleController = new VehicleController();
+    
         /*try {                           //code to open browser in hello url. problem, it loads without the content of spark
             URI uri = new URI("http://localhost:4567/hello");
             Desktop desktop = null;
@@ -277,53 +283,22 @@ public class App {
 
         /*---------------------- VEHICLE ROUTES ----------------*/
 
-        // /users/add/vehicle does a POST to this route
-        post("/vehicles",(request, response) -> { 
-            String name = request.queryParams("name");
-            String model = request.queryParams("model");
-            String km = request.queryParams("km"); //should take integers in the form
-            String user = request.queryParams("user"); //later we should use the id of the user logged
-            String type =request.queryParams("vehicleType");
-            User u = User.findFirst("email = ?",user);
-            if (type.equals("car")) {
-                u.addCar(name,model,km,request.queryParams("carType"));
-            }if (type.equals("truck")) {
-                u.addTruck(name,model,km,request.queryParams("truckType"));
-            }if (type.equals("moto")) {
-                u.addMoto(name,model,km,request.queryParams("motoType"));
-            }if (type.equals("other")) {
-                u.addVehicle(name,model,km);
-            }
-            response.redirect("/vehicles");
-            return "success"; 
+
+	post("/vehicles" , (request, response) ->{
+            return vehicleController.addVehicle(request,response);
         });
 
-        
-        //List of vehicles
-        get("/vehicles",(request, response) -> {
-            Map<String, Object> attributes = new HashMap<>();
-            List<Vehicle> vehicles = Vehicle.findAll();
-            attributes.put("vehicles_count", vehicles.size());
-            attributes.put("vehicles", vehicles);
-            return new ModelAndView(attributes, "vehicles.mustache");
+	get("/vehicles" , (request, response) -> {
+            return vehicleController.listVehicles(request,response);
         },
             new MustacheTemplateEngine()
         );
-        
-        //Show Vehicles 
-        get("/vehicles/:id", (request, response) -> {
-            Vehicle v = Vehicle.findById(Integer.parseInt(request.params(":id")));
-            if (v == null) {
-                response.redirect("/whoops", 404);
-                return "not found";
-            } else {
-                String vehicleName = v.getString("name") +" "+ v.getString("model");
-                String km = v.getString("km");
-                User u1 = User.findById(v.getInteger("user_id"));
-                String userName = u1.getString("first_name");
-                return "Vehicle: " + vehicleName+"\n"+"Belongs to: "+userName;
-            }
+ 
+    //Show Vehicles 
+	get("/vehicles/:id" , (request, response) -> {
+            return vehicleController.listVehiclesById(request, response);
         });
+
 
         /*---------------------- QUESTION ROUTES ----------------*/
 
