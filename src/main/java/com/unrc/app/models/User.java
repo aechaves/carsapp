@@ -60,7 +60,7 @@ public class User extends Model {
   }
 
   public void addPost (String price, String descr, Vehicle vehicle){
-    Post p = Post.create("price",price,"description",descr,"rate","0", "total_rating",0 , "sum_rate", 0);
+    Post p = Post.create("price",price,"description",descr,"rate","0", "total_rating", "0", "sum_rate", "0");
     p.saveIt();
     vehicle.add(p);
     this.add(p);
