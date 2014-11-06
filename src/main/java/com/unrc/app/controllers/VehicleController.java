@@ -30,7 +30,7 @@ public class VehicleController {
 	public String addVehicle (Request request, Response response) {
 
 		Post post = Post.findById(request.queryParams("postId"));
-		String name = request.queryParams("description");
+		String name = request.queryParams("name");
         String model = request.queryParams("model");
 		String km = request.queryParams("km");
 		String user = request.queryParams("user");
