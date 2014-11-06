@@ -60,7 +60,7 @@ public class App {
         QuestionController question = new QuestionController();
         SearchController searchController = new SearchController();
         VehicleController vehicleController = new VehicleController();
-
+        AnswerController answer = new AnswerController();
 
         before((request, response) -> {
             Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/carsapp_development", "root", "");
@@ -176,18 +176,18 @@ public class App {
         /*---------------------- VEHICLE ROUTES ----------------*/
 
 
-	post("/vehicles" , (request, response) ->{
+    	post("/vehicles" , (request, response) ->{
             return vehicleController.addVehicle(request,response);
         });
 
-	get("/vehicles" , (request, response) -> {
+    	get("/vehicles" , (request, response) -> {
             return vehicleController.listVehicles(request,response);
         },
             new MustacheTemplateEngine()
         );
- 
-    //Show Vehicles 
-	get("/vehicles/:id" , (request, response) -> {
+     
+        //Show Vehicles 
+    	get("/vehicles/:id" , (request, response) -> {
             return vehicleController.listVehiclesById(request, response);
         });
 
@@ -210,8 +210,7 @@ public class App {
         );
 
         /*---------------------- ANSWERS ROUTES ----------------*/
-        //create instance AnswerController
-        AnswerController answer = new AnswerController();
+       
 
         post("/posts/answer",(request, response) -> {
             return answer.answerForm(request);
