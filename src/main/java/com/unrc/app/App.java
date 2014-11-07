@@ -20,14 +20,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import com.unrc.app.models.User;
-import com.unrc.app.models.Vehicle;
-import com.unrc.app.models.Post;
-import com.unrc.app.models.Car;
-import com.unrc.app.models.Question;
-import com.unrc.app.models.Answer;
-import com.unrc.app.models.Address;
-
 import com.unrc.app.controllers.VehicleController;
 import com.unrc.app.controllers.AnswerController;
 import com.unrc.app.controllers.PostController;
@@ -61,6 +53,7 @@ public class App {
         SearchController searchController = new SearchController();
         VehicleController vehicleController = new VehicleController();
         AnswerController answer = new AnswerController();
+        PostController postController = new PostController();
 
         before((request, response) -> {
             Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/carsapp_development", "root", "");
@@ -138,7 +131,6 @@ public class App {
         },
             new MustacheTemplateEngine()
         );
-
         
         //Show User by the id
         get("/users/:id", (request, response) -> {
@@ -147,11 +139,7 @@ public class App {
             new MustacheTemplateEngine()
         );
 
-
         /*---------------------- POST ROUTES -----------------*/
-
-        //create instance PostController
-        PostController postController = new PostController();
 
         //Show Post by id
         get("/posts/:id", (request, response) -> {
@@ -172,9 +160,7 @@ public class App {
             new MustacheTemplateEngine()
         );
 
-
         /*---------------------- VEHICLE ROUTES ----------------*/
-
 
     	post("/vehicles" , (request, response) ->{
             return vehicleController.addVehicle(request,response);
@@ -191,10 +177,7 @@ public class App {
             return vehicleController.listVehiclesById(request, response);
         });
 
-
         /*---------------------- QUESTION ROUTES ----------------*/
-
-
 
         // The form shown in the post details POSTs to this route
 
@@ -211,7 +194,6 @@ public class App {
 
         /*---------------------- ANSWERS ROUTES ----------------*/
        
-
         post("/posts/answer",(request, response) -> {
             return answer.answerForm(request);
         }, 
@@ -223,7 +205,6 @@ public class App {
             return answer.addAnswer(request,response);
         });
 
-        
         /*---------------------- SEARCH ROUTES ----------------*/
 
         // Show a search bar
@@ -240,14 +221,12 @@ public class App {
             new MustacheTemplateEngine()
         );
 
-
         // Show a search bar for posts
         get("/search/posts",(request,response) -> {
             return searchController.searchPostsForm();
         }, 
             new MustacheTemplateEngine()
         );
-
 
         // Search for posts
         post("/search/posts", (request,response) -> {
